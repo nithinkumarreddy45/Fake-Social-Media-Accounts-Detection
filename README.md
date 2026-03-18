@@ -1,11 +1,79 @@
 # Fake Social Media Accounts Detection
+<img src="https://i.postimg.cc/8PdzPc2b/Healthcare-AI-Credentialing-banner-2000x857-1.jpg" alt="FAKE SOCIAL MEDIA ACCOUNT DETECTION">
 
+## Introduction
+<p>
+  Identifying fake social media accounts is a cumbersome task as malicious actors constantly evolve their techniques to mimic real human behavior. Changes in bot tactics make simple rule-based bans ineffective. In order to learn the specific characteristics of an inauthentic profile, we can use algorithms to identify structural and behavioral patterns through machine learning. Well-known algorithms for classification, such as Random Forest and Support Vector Machines (SVM), are able to process large datasets of account metadata, evaluating complex, non-linear relationships between features (like follower-to-following ratios, posting frequency, and profile completeness). These ML models are well-suited to tabular data and are able to process information step-by-step to predict whether an account is real or fake. The successful detection of fake accounts yields a safer, more trustworthy digital environment and protects users from misinformation and fraud.
+</p>
+
+## Aim
+<p> 
+  To predict and classify fake social media accounts according to profile metadata and behavioral data values using Machine Learning models.
+</p>
+
+## Objective
+<p>
+  The main objective of this project is to develop a web application that can detect inauthentic social media profiles based on real-time data inputs and provide a probability score of the account being a bot or sybil.  
+</p>
+
+## Project Scope
+<p>
+  The project has a wide scope, as it is not intended for a single social network but generalizes across common features found on platforms like Twitter, Instagram, and Facebook. This project is going to develop generic software, which can be applied by cybersecurity researchers, platform moderators, or everyday users. Moreover, it provides a facility to its users to compare the diagnostic results across different ML models (Random Forest, SVM, Logistic Regression) in real-time. 
+</p>
+
+## Key Features
+- **Real-Time Classification:** Input an account's metrics and instantly receive a "Likely Fake" or "Likely Real" verdict.
+- **Multiple ML Models:** Users can toggle between Random Forest, Decision Tree, Logistic Regression, and SVM to see how different algorithms evaluate the same data.
+- **Risk Flagging:** The system highlights specific anomalies (e.g., "Suspicious Follower/Following Ratio" or "Missing Profile Picture") that contributed to the bot score.
+- **Interactive Dashboard:** A modern, dark-mode GUI built with React and Tailwind CSS that displays recent global scans and system metrics.
+  
+## Technology Used:
+- #### Languages:
+  - ![HTML](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+  - ![CSS](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+  - ![JAVASCRIPT](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E)
+  - ![PYTHON](https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=darkgreen)
+- #### FrameWork:
+  - ![TAILWIND CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+  - ![REACT](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+- #### Machine-Learning Algorithms:
+  - <a href="https://en.wikipedia.org/wiki/Random_forest">**RANDOM FOREST CLASSIFIER**</a>
+  - <a href="https://en.wikipedia.org/wiki/Support_vector_machine">**SUPPORT VECTOR MACHINE (SVM)**</a>
+  - <a href="https://en.wikipedia.org/wiki/Logistic_regression">**LOGISTIC REGRESSION**</a>
+  - <a href="https://en.wikipedia.org/wiki/Decision_tree_learning">**DECISION TREE**</a>
+- #### ML/DL:
+  - ![NumPy](https://img.shields.io/badge/numpy-%23013243.svg?style=for-the-badge&logo=numpy&logoColor=white)
+  - ![Pandas](https://img.shields.io/badge/pandas-%23150458.svg?style=for-the-badge&logo=pandas&logoColor=white)
+  - ![scikit-learn](https://img.shields.io/badge/scikit--learn-%23F7931E.svg?style=for-the-badge&logo=scikit-learn&logoColor=white)
+- #### IDE:
+  - ![VS Code](https://img.shields.io/badge/Visual_Studio_Code-0078D4?style=for-the-badge&logo=visual%20studio%20code&logoColor=white)
+  - ![Jupyter Notebook](https://img.shields.io/badge/Jupyter-F37626.svg?&style=for-the-badge&logo=Jupyter&logoColor=white)
+- #### OS used for testing:
+  - ![MacOS](https://img.shields.io/badge/mac%20os-000000?style=for-the-badge&logo=apple&logoColor=white)
+  - ![Ubuntu](https://img.shields.io/badge/Ubuntu-E95420?style=for-the-badge&logo=ubuntu&logoColor=white)
+  - ![Windows](https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)
 ## Overview
 
 This project implements a machine learning solution to detect and classify fake social media accounts. It leverages multiple classification algorithms and provides an interactive web-based interface for real-time predictions.
 
 **Definition**: A fake social media account is an inauthentic profile created for deception, spam, or manipulation, as opposed to genuine user accounts representing real individuals or legitimate organizations.
+## Output Screen-shots
 
+**1. Home Dashboard:** Displays real-time monitoring statistics, system status, and a live feed of recent global scans detecting potentially inauthentic accounts.
+<img src="https://i.postimg.cc/9F9qPcvV/Screenshot-2026-03-18-192041.png" alt="Home Dashboard interface" width="800">
+<br><br>
+
+**2. Analysis Engine (Detection Page):** The core interface where users input an account's metadata (followers, following, bio length, etc.) and select their preferred ML model for classification.
+<img src="https://i.postimg.cc/3JGtc4yW/Screenshot-2026-03-18-192102.png" alt="Detection Input Form" width="800">
+<img src="https://i.postimg.cc/XNGLrGkk/Screenshot-2026-03-18-192110.png" alt="Detection Input Form" width="800">
+<br><br>
+
+**3. Diagnostic Results:** Provides an instant verdict ("Likely Fake" or "Likely Real") along with a detailed Bot Probability Score and the specific behavioral risk flags that triggered the detection.
+<img src="https://i.postimg.cc/ZqsPR49g/Screenshot-2026-03-18-192135.png" alt="Diagnostic Results Panel" width="800">
+<br><br>
+
+**4. ML Infrastructure Page:** Offers transparency into the backend, detailing the accuracy, classification type, and characteristics of the Machine Learning algorithms (Random Forest, SVM, Decision Tree, Logistic Regression) powering the engine.
+<img src="https://i.postimg.cc/ncf4MdzM/Screenshot-2026-03-18-192811.png" alt="Machine Learning Models Overview" width="800">
 ## Key Components
 
 1. **Pre-trained ML Models** — Four classification algorithms trained on labeled account data
