@@ -60,20 +60,20 @@ This project implements a machine learning solution to detect and classify fake 
 ## Output Screen-shots
 
 **1. Home Dashboard:** Displays real-time monitoring statistics, system status, and a live feed of recent global scans detecting potentially inauthentic accounts.
-<img src="https://i.postimg.cc/9F9qPcvV/Screenshot-2026-03-18-192041.png" alt="Home Dashboard interface" width="800">
+<img src="https://i.postimg.cc/9F9qPcvV/Screenshot-2026-03-18-192041.png" alt="Home Dashboard interface" width="50%">
 <br><br>
 
 **2. Analysis Engine (Detection Page):** The core interface where users input an account's metadata (followers, following, bio length, etc.) and select their preferred ML model for classification.
-<img src="https://i.postimg.cc/3JGtc4yW/Screenshot-2026-03-18-192102.png" alt="Detection Input Form" width="800">
-<img src="https://i.postimg.cc/XNGLrGkk/Screenshot-2026-03-18-192110.png" alt="Detection Input Form" width="800">
+<img src="https://i.postimg.cc/3JGtc4yW/Screenshot-2026-03-18-192102.png" alt="Detection Input Form" width="50%">
+<img src="https://i.postimg.cc/XNGLrGkk/Screenshot-2026-03-18-192110.png" alt="Detection Input Form" width="50%">
 <br><br>
 
 **3. Diagnostic Results:** Provides an instant verdict ("Likely Fake" or "Likely Real") along with a detailed Bot Probability Score and the specific behavioral risk flags that triggered the detection.
-<img src="https://i.postimg.cc/ZqsPR49g/Screenshot-2026-03-18-192135.png" alt="Diagnostic Results Panel" width="800">
+<img src="https://i.postimg.cc/ZqsPR49g/Screenshot-2026-03-18-192135.png" alt="Diagnostic Results Panel" width="50%">
 <br><br>
 
 **4. ML Infrastructure Page:** Offers transparency into the backend, detailing the accuracy, classification type, and characteristics of the Machine Learning algorithms (Random Forest, SVM, Decision Tree, Logistic Regression) powering the engine.
-<img src="https://i.postimg.cc/ncf4MdzM/Screenshot-2026-03-18-192811.png" alt="Machine Learning Models Overview" width="800">
+<img src="https://i.postimg.cc/ncf4MdzM/Screenshot-2026-03-18-192811.png" alt="Machine Learning Models Overview" width="50%">
 ## Key Components
 
 1. **Pre-trained ML Models** — Four classification algorithms trained on labeled account data
