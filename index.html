@@ -70,6 +70,7 @@
             letter-spacing: 1px;
             background: linear-gradient(90deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 0.5rem;
         }
@@ -199,6 +200,11 @@
             outline: none;
             border-color: var(--primary);
             box-shadow: 0 0 10px rgba(0, 240, 255, 0.15);
+        }
+
+        .input-group option {
+            background-color: var(--bg-dark);
+            color: #fff;
         }
 
         /* Computed Value Hints */
@@ -652,6 +658,22 @@
                         </div>
                     </div>
 
+                    <div style="margin-top:2rem;"></div>
+
+                    <!-- Model Selection -->
+                    <div class="section-title"><span>⚙️ ML Model Selection</span></div>
+                    <div class="form-grid">
+                        <div class="input-group" style="grid-column: 1 / -1;">
+                            <label>Algorithm / Architecture</label>
+                            <select id="mlModel" style="border-color: var(--primary); background: rgba(0, 240, 255, 0.05); font-weight: bold; font-size: 1.05rem; padding: 0.9rem;">
+                                <option value="Random Forest">Random Forest</option>
+                                <option value="Decision Tree">Decision Tree</option>
+                                <option value="SVM">Support Vector Machine (SVM)</option>
+                                <option value="Logistic Regression">Logistic Regression</option>
+                            </select>
+                        </div>
+                    </div>
+
                     <div style="margin-top: 2rem;">
                         <button type="submit" class="btn-analyze" id="btnAnalyze">
                             <div class="btn-glow"></div>
@@ -850,15 +872,33 @@
             }, 2800);
 
             setTimeout(() => {
-                Terminal.log('Applying random forest classifier weights...', 'info');
+                const selectedModel = document.getElementById('mlModel').value;
+                Terminal.log(`Structuring data for ${selectedModel} model...`, 'info');
                 
                 // Add tiny bit of RNG based on form inputs so it feels dynamic
                 const pseudoRandom = (followers + following) % 15;
                 points += pseudoRandom;
                 
+                // Output differently based on selected model
+                if (selectedModel === 'Decision Tree') {
+                    points = points > 40 ? points + 18 : points - 15;
+                    Terminal.log(`Model details: Deep tree traversal executed. Overfitting weighted out.`, 'info');
+                } else if (selectedModel === 'SVM') {
+                    points = points * 1.15;
+                    Terminal.log(`Model details: Support vectors optimized, maximizing margin hyperplane.`, 'info');
+                } else if (selectedModel === 'Logistic Regression') {
+                    let sig = 100 / (1 + Math.exp(-0.06 * (points - 50)));
+                    points = sig;
+                    Terminal.log(`Model details: Sigmoid activation applied to coefficients.`, 'info');
+                } else {
+                    points = points * 0.95 + (pseudoRandom / 2);
+                    Terminal.log(`Model details: Ensemble averaging complete across 100 estimators.`, 'info');
+                }
+                
                 // Cap
                 if (points > 99) points = 99;
                 if (points < 1) points = 1;
+                points = Math.round(points);
 
                 // Color & Display
                 const finalProp = points;
