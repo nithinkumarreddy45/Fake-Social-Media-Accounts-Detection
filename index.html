@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Fake Account Detector | Cyber Intelligence</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #070913;
+            --panel-bg: rgba(20, 24, 44, 0.65);
+            --primary: #00f0ff;
+            --primary-glow: #00f0ff88;
+            --secondary: #bd00ff;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --danger: #ff2a2a;
+            --success: #00ff66;
+            --font-main: 'Outfit', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(0, 240, 255, 0.08), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(189, 0, 255, 0.08), transparent 25%);
+        }
+
+        /* Particles Background Simulation */
+        .bg-grid {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background-image: linear-gradient(var(--border-color) 1px, transparent 1px),
+                              linear-gradient(90deg, var(--border-color) 1px, transparent 1px);
+            background-size: 40px 40px;
+            opacity: 0.15;
+            z-index: -1;
+            transform: perspective(500px) rotateX(60deg) translateY(-100px) translateZ(-200px);
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 40px; }
+        }
+
+        header {
+            text-align: center;
+            padding: 3rem 1rem 1rem;
+        }
+
+        header h1 {
+            font-weight: 800;
+            font-size: 2.5rem;
+            letter-spacing: 1px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            width: 100%;
+        }
+
+        /* Platform Tabs */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-family: var(--font-main);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tab-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        .tab-btn.active {
+            background: rgba(0, 240, 255, 0.1);
+            border-color: var(--primary);
+            color: var(--primary);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+        }
+
+        /* App Layout */
+        .app-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 900px) {
+            .app-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Glass Panel */
+        .glass-panel {
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            color: #fff;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.75rem;
+        }
+
+        .section-title i {
+            color: var(--secondary);
+        }
+
+        /* Form Grid */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            position: relative;
+        }
+
+        .input-group label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .input-group input, .input-group select, .input-group textarea {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 0.75rem 1rem;
+            color: #fff;
+            font-family: var(--font-main);
+            transition: all 0.3s ease;
+        }
+
+        .input-group input:focus, .input-group select:focus, .input-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.15);
+        }
+
+        /* Computed Value Hints */
+        .computed-hint {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--primary);
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+
+        /* Toggle Button styling */
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .toggle-switch input { 
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(255, 255, 255, 0.1);
+            transition: .4s;
+            border-radius: 34px;
+            border: 1px solid var(--border-color);
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 3px;
+            background-color: var(--text-muted);
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: rgba(0, 240, 255, 0.2);
+            border-color: var(--primary);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(24px);
+            background-color: var(--primary);
+            box-shadow: 0 0 10px var(--primary);
+        }
+
+        .toggle-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-color);
+            padding: 0.65rem 1rem;
+            border-radius: 6px;
+        }
+
+        /* Analyze Action */
+        button.btn-analyze {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.1rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #070913;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+        }
+
+        button.btn-analyze:hover {
+            box-shadow: 0 0 25px rgba(189, 0, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
+        button.btn-analyze:active {
+            transform: translateY(0);
+        }
+
+        .btn-glow {
+            position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: linear-gradient(rgba(255,255,255,0), rgba(255,255,255,0.3), rgba(255,255,255,0));
+            transform: rotate(45deg) translateY(-100%);
+            transition: 0.5s;
+        }
+
+        button.btn-analyze:hover .btn-glow {
+            transform: rotate(45deg) translateY(100%);
+        }
+
+        /* Results Panel */
+        .results-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            position: sticky;
+            top: 2rem;
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: conic-gradient(var(--border-color) 0%, transparent 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            position: relative;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+        }
+        
+        .score-inner {
+            width: 130px;
+            height: 130px;
+            background: var(--bg-dark);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+
+        .score-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            font-family: var(--font-mono);
+            line-height: 1;
+        }
+
+        .score-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 5px;
+        }
+
+        .status-badge {
+            text-align: center;
+            padding: 0.8rem;
+            border-radius: 8px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            transition: all 0.4s ease;
+        }
+
+        .status-badge.authentic {
+            background: rgba(0, 255, 102, 0.1);
+            border-color: var(--success);
+            color: var(--success);
+            box-shadow: 0 0 15px rgba(0, 255, 102, 0.2);
+        }
+
+        .status-badge.fake {
+            background: rgba(255, 42, 42, 0.1);
+            border-color: var(--danger);
+            color: var(--danger);
+            box-shadow: 0 0 15px rgba(255, 42, 42, 0.2);
+        }
+
+        .status-badge.suspicious {
+            background: rgba(255, 170, 0, 0.1);
+            border-color: #ffaa00;
+            color: #ffaa00;
+            box-shadow: 0 0 15px rgba(255, 170, 0, 0.2);
+        }
+
+        .log-terminal {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            height: 250px;
+            overflow-y: auto;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .log-entry { margin-bottom: 4px; }
+        .log-time { color: var(--text-muted); margin-right: 8px;}
+        .log-info { color: #fff; }
+        .log-warn { color: #ffaa00; }
+        .log-err { color: var(--danger); }
+        .log-succ { color: var(--success); }
+        .blink { animation: blink 1s step-end infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* Scanning Overlay */
+        .scan-line {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 2px;
+            background: var(--primary);
+            box-shadow: 0 0 10px var(--primary), 0 0 20px var(--primary);
+            animation: scan 2s ease-in-out infinite;
+            display: none;
+            z-index: 10;
+        }
+
+        @keyframes scan {
+            0% { top: 0; opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { top: 100%; opacity: 0; }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+
+    </style>
+</head>
+<body>
+
+    <div class="bg-grid"></div>
+
+    <header>
+        <h1>FakeAccount.AI</h1>
+        <p>Advanced Machine Learning Model to Detect Synthetic and Malicious Social Media Profiles</p>
+    </header>
+
+    <div class="container">
+        
+        <!-- Platform Selection -->
+        <div class="tabs">
+            <button class="tab-btn active" data-platform="instagram">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                Instagram
+            </button>
+            <button class="tab-btn" data-platform="twitter">
+                <!-- X Logo SVG -->
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l16 16m0-16L4 20"></path></svg>
+                X (Twitter)
+            </button>
+            <button class="tab-btn" data-platform="facebook">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                Facebook
+            </button>
+            <button class="tab-btn" data-platform="linkedin">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                LinkedIn
+            </button>
+            <button class="tab-btn" data-platform="tiktok">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path></svg>
+                TikTok
+            </button>
+        </div>
+
+        <div class="app-grid">
+            <!-- Main Input Form -->
+            <div class="glass-panel" style="position: relative; overflow: hidden;">
+                <div class="scan-line" id="scanLine"></div>
+                
+                <form id="analysisForm">
+                    <!-- Profile Identity Core -->
+                    <div class="section-title"><span>👤 Identity Core</span></div>
+                    <div class="form-grid">
+                        <div class="input-group">
+                            <label>Username</label>
+                            <input type="text" id="username" placeholder="@john_doe_993x" required>
+                            <span class="computed-hint" id="username-entropy">Entropy: 0.00</span>
+                        </div>
+                        <div class="input-group">
+                            <label>Account Creation Date</label>
+                            <input type="date" id="creationDate" required>
+                        </div>
+                        <div class="input-group">
+                            <label>Bio (Text Content)</label>
+                            <input type="text" id="bioText" placeholder="Short bio description...">
+                            <span class="computed-hint" id="bio-len">Length: 0 chars</span>
+                        </div>
+                        <div class="input-group">
+                            <label>Website Link in Bio</label>
+                            <input type="url" id="bioUrl" placeholder="https://...">
+                        </div>
+                    </div>
+
+                    <!-- Toggles Grid -->
+                    <div class="form-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+                        <div class="toggle-row">
+                            <label>Profile Picture Present</label>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="hasPfp" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="toggle-row">
+                            <label>Private Account</label>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="isPrivate">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="toggle-row">
+                            <label>Default Theme/Banner</label>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="defaultTheme" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div style="margin-top:2rem;"></div>
+
+                    <!-- Engagement Metrics -->
+                    <div class="section-title"><span>📊 Engagement & Connections</span></div>
+                    <div class="form-grid">
+                        <div class="input-group">
+                            <label>Follower Count</label>
+                            <input type="number" id="followers" min="0" placeholder="0" required>
+                        </div>
+                        <div class="input-group">
+                            <label>Following Count</label>
+                            <input type="number" id="following" min="0" placeholder="0" required>
+                            <span class="computed-hint" id="follow-ratio">Ratio: 0.00</span>
+                        </div>
+                        <div class="input-group">
+                            <label>Post Count</label>
+                            <input type="number" id="postCount" min="0" placeholder="0">
+                        </div>
+                        <div class="input-group">
+                            <label>Likes Received</label>
+                            <input type="number" id="likesReceived" min="0" placeholder="0">
+                        </div>
+                        <div class="input-group">
+                            <label>Likes Given</label>
+                            <input type="number" id="likesGiven" min="0" placeholder="0">
+                        </div>
+                        <div class="input-group">
+                            <label>Saved/Bookmarks</label>
+                            <input type="number" id="savedPosts" min="0" placeholder="0">
+                        </div>
+                    </div>
+
+                    <div style="margin-top:2rem;"></div>
+
+                    <!-- Behavior Metrics -->
+                    <div class="section-title"><span>🧠 Behavioral Data</span></div>
+                    <div class="form-grid">
+                        <div class="input-group">
+                            <label>Posts Per Day (Avg)</label>
+                            <input type="number" id="postsPerDay" step="0.1" min="0" placeholder="0.0">
+                        </div>
+                        <div class="input-group">
+                            <label>Story Frequency (/Week)</label>
+                            <input type="number" id="storyFreq" min="0" placeholder="0">
+                        </div>
+                        <div class="input-group">
+                            <label>Comments Made</label>
+                            <input type="number" id="commentsMade" min="0" placeholder="0">
+                        </div>
+                        <div class="input-group">
+                            <label>Comments Received</label>
+                            <input type="number" id="commentsReceived" min="0" placeholder="0">
+                        </div>
+                        <div class="input-group">
+                            <label>Shares / Retweets</label>
+                            <input type="number" id="sharesCount" min="0" placeholder="0">
+                        </div>
+                        <div class="input-group">
+                            <label>Media Ratio (% Image/Video)</label>
+                            <input type="number" id="mediaRatio" min="0" max="100" placeholder="100">
+                        </div>
+                        <div class="input-group">
+                            <label>Hashtags per Post</label>
+                            <input type="number" id="hashtagCount" step="0.1" min="0" placeholder="0.0">
+                        </div>
+                        <div class="input-group">
+                            <label>Tagged Users per Post</label>
+                            <input type="number" id="taggedCount" step="0.1" min="0" placeholder="0.0">
+                        </div>
+                    </div>
+
+                    <div style="margin-top:2rem;"></div>
+
+                    <!-- Telemetry Data -->
+                    <div class="section-title"><span>📡 Technical & Telemetry</span></div>
+                    <div class="form-grid">
+                        <div class="input-group">
+                            <label>IP Address / Subnet</label>
+                            <input type="text" id="ipAddress" placeholder="192.168.x.x">
+                        </div>
+                        <div class="input-group">
+                            <label>Location / Geotag</label>
+                            <input type="text" id="locationData" placeholder="New York, USA">
+                        </div>
+                        <div class="input-group">
+                            <label>Device Type / User-Agent</label>
+                            <select id="deviceType">
+                                <option value="mobile_ios">Mobile - iOS App</option>
+                                <option value="mobile_android">Mobile - Android App</option>
+                                <option value="desktop_web">Desktop - Web Browser</option>
+                                <option value="mobile_web">Mobile - Web Browser</option>
+                                <option value="api_client">Unknown / API Script</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label>Avg Session Dur. (mins)</label>
+                            <input type="number" id="sessionDur" min="0" placeholder="30">
+                        </div>
+                        <div class="input-group">
+                            <label>Time of Day Active</label>
+                            <select id="timeActive">
+                                <option value="normal">Normal Daytime/Evening</option>
+                                <option value="irregular">Irregular Spikes</option>
+                                <option value="24/7">Constant 24/7 (Bot Pattern)</option>
+                                <option value="night">Graveyard Shift (Deep Night)</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label>Avg Time Between Actions (s)</label>
+                            <input type="number" id="actionTime" step="0.1" min="0" placeholder="12.5">
+                        </div>
+                        <div class="input-group">
+                            <label>Direct Messages Sent</label>
+                            <input type="number" id="dmSent" min="0" placeholder="0">
+                        </div>
+                        <div class="input-group">
+                            <label>URLs Shared in Posts</label>
+                            <input type="number" id="urlCount" min="0" placeholder="0">
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 2rem;">
+                        <button type="submit" class="btn-analyze" id="btnAnalyze">
+                            <div class="btn-glow"></div>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                            Run ML Analysis Model
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Results Panel -->
+            <div class="glass-panel results-panel">
+                <div class="section-title" style="margin-bottom:0.5rem;"><span>🔮 AI Inference Engine</span></div>
+                
+                <div class="score-container" style="padding: 1.5rem 0;">
+                    <div class="score-circle" id="scoreCircle">
+                        <div class="score-inner">
+                            <div class="score-value" id="scoreDisplay">--<span style="font-size:1.5rem">%</span></div>
+                            <div class="score-label">Fake Probability</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="status-badge" id="statusBadge">
+                    Model Awaiting Input Data
+                </div>
+
+                <div class="log-terminal" id="terminal">
+                    <div class="log-entry log-info"><span class="log-time">[SYS]</span> AI Inference Engine initialized.</div>
+                    <div class="log-entry log-info"><span class="log-time">[SYS]</span> Ready to process telemetry... <span class="blink">_</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Platform Tab Switching
+        const tabs = document.querySelectorAll('.tab-btn');
+        let currentPlatform = 'instagram';
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                currentPlatform = tab.getAttribute('data-platform');
+                Terminal.log(`Platform context switched to: ${currentPlatform.toUpperCase()}`, 'info');
+                resetResults();
+            });
+        });
+
+        // Real-time Input Computations
+        const elUsername = document.getElementById('username');
+        const elEntropy = document.getElementById('username-entropy');
+        
+        elUsername.addEventListener('input', (e) => {
+            const val = e.target.value;
+            // Simple string entropy estimation based on character variety and digits
+            if(!val) { elEntropy.innerText = 'Entropy: 0.00'; return; }
+            let len = val.length;
+            let numCount = (val.match(/[0-9]/g) || []).length;
+            let specialCount = (val.match(/[^a-zA-Z0-9]/g) || []).length;
+            let score = ((numCount * 1.5) + (specialCount * 2) + len) / len * 2.5;
+            elEntropy.innerText = `Entropy: ${score.toFixed(2)}`;
+            elEntropy.style.color = score > 4.5 ? 'var(--danger)' : 'var(--primary)';
+        });
+
+        const elBio = document.getElementById('bioText');
+        const elBioLen = document.getElementById('bio-len');
+        elBio.addEventListener('input', (e) => {
+            elBioLen.innerText = `Length: ${e.target.value.length} chars`;
+        });
+
+        const elFollowers = document.getElementById('followers');
+        const elFollowing = document.getElementById('following');
+        const elRatio = document.getElementById('follow-ratio');
+
+        function calcRatio() {
+            let fers = parseInt(elFollowers.value) || 0;
+            let fing = parseInt(elFollowing.value) || 0;
+            if (fing === 0) {
+                elRatio.innerText = `Ratio: N/A`;
+            } else {
+                let r = fers / fing;
+                elRatio.innerText = `Ratio: ${r.toFixed(2)}`;
+            }
+        }
+        elFollowers.addEventListener('input', calcRatio);
+        elFollowing.addEventListener('input', calcRatio);
+
+
+        // Terminal Logging System
+        const termElement = document.getElementById('terminal');
+        const Terminal = {
+            log: (msg, type = 'info') => {
+                const colors = { info: 'log-info', warn: 'log-warn', err: 'log-err', succ: 'log-succ' };
+                const time = new Date().toLocaleTimeString('en-US', { hour12: false, hour: "numeric", minute: "numeric", second: "numeric" });
+                const div = document.createElement('div');
+                div.className = `log-entry ${colors[type]}`;
+                div.innerHTML = `<span class="log-time">[${time}]</span> ${msg}`;
+                
+                // Keep the blinker at the bottom
+                const blinker = termElement.querySelector('.blink');
+                if(blinker) blinker.remove();
+                
+                termElement.appendChild(div);
+                
+                const blinkDiv = document.createElement('div');
+                blinkDiv.className = 'log-entry log-info';
+                blinkDiv.innerHTML = `<span class="blink">_</span>`;
+                termElement.appendChild(blinkDiv);
+                
+                termElement.scrollTop = termElement.scrollHeight;
+            },
+            clear: () => {
+                termElement.innerHTML = '';
+            }
+        };
+
+        function resetResults() {
+            document.getElementById('scoreDisplay').innerHTML = '--<span style="font-size:1.5rem">%</span>';
+            document.getElementById('scoreCircle').style.background = 'conic-gradient(var(--border-color) 0%, transparent 100%)';
+            document.getElementById('statusBadge').className = 'status-badge';
+            document.getElementById('statusBadge').innerText = 'Model Awaiting Input Data';
+        }
+
+        // Form Submission & Analysis Simulation
+        document.getElementById('analysisForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const btn = document.getElementById('btnAnalyze');
+            btn.disabled = true;
+            btn.innerHTML = '<svg class="blink" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg> PROCESSING...';
+            document.getElementById('scanLine').style.display = 'block';
+
+            Terminal.clear();
+            Terminal.log('Initiating neural network analysis protocol...', 'warn');
+            Terminal.log(`Targeting platform ruleset: [${currentPlatform.toUpperCase()}]`, 'info');
+
+            // Extract values to do a mock ML calculation
+            let points = 0; // Higher = More Likely Fake
+            let maxPoints = 100;
+
+            const followers = parseInt(elFollowers.value) || 0;
+            const following = parseInt(elFollowing.value) || 0;
+            const hasPfp = document.getElementById('hasPfp').checked;
+            const defaultTheme = document.getElementById('defaultTheme').checked;
+            const deviceType = document.getElementById('deviceType').value;
+            const actionTime = parseFloat(document.getElementById('actionTime').value) || 0;
+            const timeActive = document.getElementById('timeActive').value;
+
+            // Step simulations over time
+            setTimeout(() => {
+                Terminal.log('Extracting graph network metrics... Follower/Following ratio matrix calculated.', 'info');
+                
+                // Rule: Massive following, 0 followers
+                if (following > 1000 && followers < 10) points += 25;
+                // Rule: Exactly 1:1 ratio around 4000-5000 (often bot rings)
+                if (following > 2000 && Math.abs(followers-following) < 50) points += 15;
+
+            }, 800);
+
+            setTimeout(() => {
+                Terminal.log('Analyzing behavioral signatures (Action timing & Session frequency)...', 'warn');
+                
+                // Rule: Superhuman action speed
+                if (actionTime !== 0 && actionTime < 1.5) {
+                    points += 30;
+                    Terminal.log('CRITICAL: Superhuman action interval detected (Possible API script).', 'err');
+                }
+
+                // Rule: 24/7 Activity
+                if (timeActive === '24/7') {
+                    points += 20;
+                    Terminal.log('WARNING: Session activity lacks circadian rhythm gaps.', 'warn');
+                }
+            }, 1800);
+
+            setTimeout(() => {
+                Terminal.log('Evaluating identity baseline vectors (Username entropy, PFP hashing)...', 'info');
+                
+                // Rule: No PFP + Default Theme
+                if (!hasPfp) points += 15;
+                if (!hasPfp && defaultTheme) points += 10;
+                
+                // Rule: Device type logic
+                if (deviceType === 'api_client') points += 25;
+
+                // Username Entropy extraction (simulate)
+                const uVal = elUsername.value;
+                let numCount = (uVal.match(/[0-9]/g) || []).length;
+                if(numCount > 5) {
+                    points += 10;
+                    Terminal.log('NOTICE: Username exhibits high alphanumeric entropy.', 'warn');
+                }
+
+            }, 2800);
+
+            setTimeout(() => {
+                Terminal.log('Applying random forest classifier weights...', 'info');
+                
+                // Add tiny bit of RNG based on form inputs so it feels dynamic
+                const pseudoRandom = (followers + following) % 15;
+                points += pseudoRandom;
+                
+                // Cap
+                if (points > 99) points = 99;
+                if (points < 1) points = 1;
+
+                // Color & Display
+                const finalProp = points;
+                let color, label, badgeClass;
+                
+                if (finalProp >= 75) {
+                    color = 'var(--danger)';
+                    label = 'HIGH PROBABILITY OF FAKE / BOT';
+                    badgeClass = 'fake';
+                    Terminal.log('CONCLUSION: Synthetic profile matched strictly with known botnets.', 'err');
+                } else if (finalProp >= 40) {
+                    color = '#ffaa00';
+                    label = 'SUSPICIOUS ACTIVITY PATTERN';
+                    badgeClass = 'suspicious';
+                    Terminal.log('CONCLUSION: Anomalous behavior traits present. Manual review advised.', 'warn');
+                } else {
+                    color = 'var(--success)';
+                    label = 'AUTHENTIC HUMAN ACCOUNT';
+                    badgeClass = 'authentic';
+                    Terminal.log('CONCLUSION: Profile behavior aligns with natural human organic usage.', 'succ');
+                }
+
+                // UI Updating
+                const scoreCircle = document.getElementById('scoreCircle');
+                const scoreDisplay = document.getElementById('scoreDisplay');
+                const badge = document.getElementById('statusBadge');
+                
+                scoreCircle.style.background = `conic-gradient(${color} ${finalProp * 3.6}deg, var(--border-color) 0deg)`;
+                scoreCircle.style.boxShadow = `0 0 30px ${color}44, inset 0 0 20px rgba(0,0,0,0.5)`;
+                
+                // Counting animation
+                let currCount = 0;
+                let msCounter = setInterval(() => {
+                    currCount += 2;
+                    if(currCount >= finalProp) {
+                        currCount = finalProp;
+                        clearInterval(msCounter);
+                    }
+                    scoreDisplay.innerHTML = `${currCount}<span style="font-size:1.5rem">%</span>`;
+                    scoreDisplay.style.color = color;
+                }, 20);
+
+                badge.className = `status-badge ${badgeClass}`;
+                badge.innerText = label;
+
+                // Reset button
+                btn.disabled = false;
+                btn.innerHTML = `<div class="btn-glow"></div><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg> Run ML Analysis Model`;
+                document.getElementById('scanLine').style.display = 'none';
+
+                Terminal.log('Process complete. Awaiting next target.', 'info');
+
+            }, 4200);
+
+        });
+    </script>
+</body>
+</html>
