@@ -1,6 +1,8 @@
 # Fake Social Media Accounts Detection
 <img src="https://i.postimg.cc/8PdzPc2b/Healthcare-AI-Credentialing-banner-2000x857-1.jpg" alt="FAKE SOCIAL MEDIA ACCOUNT DETECTION">
 
+## Live page- https://nithinkumarreddy45.github.io/Fake-Social-Media-Accounts-Detection/
+
 ## Introduction
 <p>
   Identifying fake social media accounts is a cumbersome task as malicious actors constantly evolve their techniques to mimic real human behavior. Changes in bot tactics make simple rule-based bans ineffective. In order to learn the specific characteristics of an inauthentic profile, we can use algorithms to identify structural and behavioral patterns through machine learning. Well-known algorithms for classification, such as Random Forest and Support Vector Machines (SVM), are able to process large datasets of account metadata, evaluating complex, non-linear relationships between features (like follower-to-following ratios, posting frequency, and profile completeness). These ML models are well-suited to tabular data and are able to process information step-by-step to predict whether an account is real or fake. The successful detection of fake accounts yields a safer, more trustworthy digital environment and protects users from misinformation and fraud.
